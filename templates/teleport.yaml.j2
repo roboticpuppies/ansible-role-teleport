@@ -1,0 +1,118 @@
+teleport:
+  # nodename allows one to assign an alternative name this node can be reached by.
+  # by default it's equal to hostname
+  nodename: {{ teleport_nodename }}
+
+  # Data directory where Teleport daemon keeps its data.
+  # See "Filesystem Layout" for more details
+  # (https://goteleport.com/docs/admin-guide/#filesystem-layout).
+  data_dir: {{ teleport_data_dir }}
+
+  # Invitation token used to join a cluster. it is not used on
+  # subsequent starts
+  auth_token: {{ teleport_auth_token }}
+  # Auth Server address and port to connect to. If you configure teleport auth to run in High
+  # Availability configuration the address should point to a Load Balancer.
+  # If adding a node located behind NAT, use the Proxy URL. e.g.
+  auth_servers:
+  {% for auth_server in teleport_auth_servers %}
+    - {{ auth_server }}
+  {% endfor %}
+
+  # Teleport throttles all connections to avoid abuse. These settings allow
+  # you to adjust the default limits
+  connection_limits:
+      max_connections: 1000
+      max_users: 250
+
+  # Logging configuration. Possible output values to disk via '/var/lib/teleport/teleport.log',
+  # 'stdout', 'stderr' and 'syslog'. Possible severity values are INFO, WARN
+  # and ERROR (default).
+  log:
+    output: {{ teleport_log_path }}
+    severity: {{ teleport_log_level }}
+    format:
+      output: text
+      extra_fields: [level, timestamp, component, caller]
+
+  # Configuration for the storage back-end used for the cluster state and the
+  # audit log. Several back-end types are supported. See the "High Availability"
+  # section of the Admin Manual (https://goteleport.com/docs/admin-guide/#high-availability)
+  # to learn how to configure DynamoDB, S3, etcd, and other highly available back-ends.
+  storage:
+    type: {{ teleport_storage_type }}
+    audit_events_uri: ['file:///var/lib/teleport/log']
+    {% if teleport_storage_type == "DynamoDB" %}
+    # DynamoDB Specific Section
+    # continuous_backups is used to enable continuous backups.
+    continuous_backups: {{ teleport_dynamodb_continuous_backups }}
+    # auto_scaling is used to enable (and define settings for) auto scaling.
+    auto_scaling:  {{ teleport_dynamodb_auto_scaling }}
+    {% endif %}
+
+auth_service:
+  {% if teleport_auth_enabled == yes  %}
+  # Turns 'auth' role on.
+  enabled: {{ teleport_auth_enabled }}
+  cluster_name: {{ teleport_auth_cluster_name }}
+  authentication:
+    type: local
+    # second_factor can be off, otp, or u2f
+    second_factor: {{ teleport_auth_second_factor }}
+
+  # IP and the port to bind to. Other Teleport nodes will be connecting to
+  # this port (AKA "Auth API" or "Cluster API") to validate client
+  # certificates
+  listen_addr: {{ teleport_auth_listen_address }}
+
+  # Pre-defined tokens for adding new nodes to a cluster. Each token specifies
+  # the role a new node will be allowed to assume. The more secure way to
+  # add nodes is to use `tctl nodes add --ttl` command to generate auto-expiring
+  # tokens.
+  {% if teleport_auth_tokens_node|length > 0 or teleport_auth_tokens_proxy|length > 0 or teleport_auth_tokens_auth|length > 0 %}
+  tokens:
+  {% for token in teleport_auth_tokens_node %}
+      - "node:{{ token }}"
+  {% endfor %}
+  {% for token in teleport_auth_tokens_proxy %}
+      - "proxy:{{ token }}"
+  {% endfor %}
+  {% for token in teleport_auth_tokens_auth %}
+      - "auth:{{ token }}"
+  {% endfor %}
+  {% endif %}
+
+  session_recording: {{ teleport_session_recording }}
+  {% if teleport_session_recording == "proxy" %}
+  proxy_checks_host_keys: {{ teleport_proxy_checks_host_keys }}
+  {% endif %}
+
+  client_idle_timeout: {{ teleport_client_idle_timeout }}
+
+  {% else %}
+  enabled: {{ teleport_auth_enabled }}
+  {% endif %}
+# This section configures the 'node service':
+ssh_service:
+{% if teleport_ssh_enabled | default(false) %}
+  enabled: "yes"
+  listen_addr: {{ teleport_ssh_listen_address }}
+  labels:
+    group: {{ teleport_ssh_labels }}
+{% else %}
+  enabled: "no"
+{% endif %}
+
+proxy_service:
+{% if teleport_proxy_enabled == yes %}
+  enabled: {{ teleport_proxy_enabled }}
+  listen_addr: {{ teleport_proxy_listen_address }}
+  web_listen_addr: {{ teleport_proxy_web_listen_address }}
+  tunnel_listen_addr: {{ teleport_proxy_tunnel_listen_address }}
+{% if teleport_proxy_https_key_file %}
+  https_key_file: {{ teleport_proxy_https_key_file }}
+  https_cert_file: {{ teleport_proxy_https_cert_file }}
+{% endif %}
+{% else %}
+  enabled: "no"
+{% endif %}

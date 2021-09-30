@@ -1,0 +1,12 @@
+---
+- name: Configure Teleport.
+  template:
+    src: teleport.yml.j2
+    dest: /etc/teleport.yaml
+  notify: restart teleport
+
+- name: Check wether certificates defined for proxy role exist.
+  stat:
+    path: "{{ teleport_proxy_https_cert_file }}"
+  register: teleport_proxy_certificate
+  when: teleport_proxy_enabled == yes

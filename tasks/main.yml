@@ -1,0 +1,15 @@
+---
+- name: Debug
+  debug:
+    msg: "Hello world"
+# Setup/install tasks.
+- include_tasks: "setup-{{ ansible_os_family }}.yml"
+
+# Configure tasks.
+- include_tasks: "configure-{{ ansible_os_family }}.yml"
+
+- name: Ensure Teleport has selected state and enabled on boot.
+  service:
+    name: "{{ teleport_service }}"
+    state: "{{ teleport_state }}"
+    enabled: "{{ teleport_enabled }}"

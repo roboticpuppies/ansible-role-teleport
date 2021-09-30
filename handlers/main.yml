@@ -1,0 +1,5 @@
+---
+- name: restart teleport
+  service:
+    name: "{{ teleport_service }}"
+    state: restarted

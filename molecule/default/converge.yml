@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  
+  tasks:
+    - name: Get OS Family
+      debug:
+        msg: "{{ ansible_os_family }}"
+
+    - name: "Include roboticpuppies.teleport"
+      include_role:
+        name: "roboticpuppies.teleport"
