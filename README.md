@@ -25,7 +25,7 @@ Predefined token for node to connect to auth server
 The IP or domain of the auth servers
 
     teleport_auth_servers:
-  - 127.0.0.1:3025
+    - 127.0.0.1:3025
 
 Where to store logs
 
@@ -53,12 +53,12 @@ certificates and keys (may need to wipe out /var/lib/teleport directory)
 
 Second_factor can be off, otp, or u2f
 
-  teleport_auth_second_factor: "off"
+    teleport_auth_second_factor: "off"
 
 This section is used if second_factor is set to 'u2f'
 Public address of the Teleport proxy, _including_ the `https://` prefix. If you use a port number other than 443, include it as well. `app_id` must never change in the lifetime of the cluster.
 
-  teleport_u2f_app_id: "https://localhost:3080"
+    teleport_u2f_app_id: "https://localhost:3080"
 
 List of allowed addresses of the Teleport proxy checked during authentication attempts. This list is used to prevent malicious websites and proxies from requesting U2F challenges on behalf of the legitimate proxy.
 
@@ -88,7 +88,9 @@ Optional setting for configuring session recording. Possible values are:
   - "proxy" : recording on the proxy level, see [Recording Proxy Mode](https://goteleport.com/docs/architecture/proxy/#recording-proxy-mode).
    "off"   : session recording is turned off
 
-    teleport_session_recording: "node"
+```
+teleport_session_recording: "node"
+```
 
 Determines if SSH sessions to cluster nodes are forcefully terminated after no activity from a client (idle client). Examples: "30m", "1h" or "1h30m"
 
