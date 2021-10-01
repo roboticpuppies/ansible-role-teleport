@@ -1,12 +1,15 @@
 ---
 - name: Configure Teleport.
   template:
-    src: teleport.yml.j2
+    src: teleport.yaml.j2
     dest: /etc/teleport.yaml
   notify: restart teleport
 
-- name: Check wether certificates defined for proxy role exist.
-  stat:
-    path: "{{ teleport_proxy_https_cert_file }}"
-  register: teleport_proxy_certificate
-  when: teleport_proxy_enabled == yes
+# - name: Upload SSL certificate.
+#   copy:
+#     src: "{{ item.name }}"
+#     dest: "/var/lib/teleport/{{ item.dest_name }}"
+#   loop:
+#     - {name: ssl.crt, dest_name: webproxy_cert.pem}
+#     - {name: ssl.key, dest_name: webproxy_key.pem}
+#   when: teleport_proxy_enabled == true

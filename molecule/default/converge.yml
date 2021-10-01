@@ -2,10 +2,16 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Get OS Family
+    - name: Get OS Family.
       debug:
         msg: "{{ ansible_os_family }}"
 
+    - name: Install required packages.
+      package:
+        name:
+          - openssl
+          - nano
+
     - name: "Include roboticpuppies.teleport"
       include_role:
-        name: "roboticpuppies.teleport"
+        name: "ansible-role-teleport"

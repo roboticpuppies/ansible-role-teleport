@@ -1,8 +1,16 @@
 ---
+# - name: Add Teleport repository.
+#   command: yum-config-manager --add-repo https://rpm.releases.teleport.dev/teleport.repo
+# - name: Add Teleport repository.
+#   yum_repository:
+#     name: Teleport Repository
+#     baseurl: https://rpm.releases.teleport.dev/teleport.repo
+#     description: "Teleport Access Plane repository for RHEL"
+
 - name: Add Teleport repository.
-  yum_repository:
-    name: Teleport Repository
-    baseurl: https://rpm.releases.teleport.dev/teleport.repo
+  get_url:
+    url: https://rpm.releases.teleport.dev/teleport.repo
+    dest: /etc/yum.repos.d/teleport.repo
 
 - name: Ensure Teleport is installed in RHEL.
   package:

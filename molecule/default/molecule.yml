@@ -4,10 +4,55 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: instance
+  - name: node1.myra.my.id
     image: centos:7
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
     pre_build_image: true
+    groups:
+      - node
+  - name: node2.myra.my.id
+    image: centos:7
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    pre_build_image: true
+    groups:
+      - node
+  - name: auth.myra.my.id
+    image: centos:7
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    pre_build_image: true
+    groups:
+      - auth
+      - proxy
 provisioner:
   name: ansible
+  inventory:
+    group_vars:
+      auth:
+        teleport_auth_servers:
+          - 127.0.0.1:3025
+        teleport_auth_tokens_node:
+          - xxx-changeme-xxx
+        teleport_auth_enabled: true
+        teleport_auth_cluster_name: "molecule"
+      proxy:
+        teleport_proxy_enabled: true
+      node:
+        teleport_auth_servers:
+          - "172.17.0.4:3025"
 verifier:
   name: ansible
