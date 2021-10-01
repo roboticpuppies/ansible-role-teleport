@@ -139,11 +139,6 @@ You will be provided an URL to set that user's password.
 
 Please see Teleport [getting started guide](https://goteleport.com/docs/getting-started/linux-server/)
 
-License
--------
-
-BSD
-
 Author Information
 ------------------
 
