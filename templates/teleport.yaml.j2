@@ -35,8 +35,16 @@ auth_service:
   authentication:
     type: local
     second_factor: {{ teleport_auth_second_factor }}
-
+{% if teleport_auth_second_factor == "u2f" %}
+    u2f:
+      app_id: {{ teleport_u2f_app_id }}
+      facets:
+      {% for facet in teleport_u2f_facets %}
+      - {{ facet }}
+      {% endfor %}
+{% endif %}
   listen_addr: {{ teleport_auth_listen_address }}
+  locking_mode: {{ teleport_locking_mode }}
 
 {% if teleport_auth_tokens_node|length > 0 or teleport_auth_tokens_proxy|length > 0 or teleport_auth_tokens_auth|length > 0 %}
   tokens:

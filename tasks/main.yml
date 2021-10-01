@@ -8,6 +8,9 @@
 # Configure tasks.
 - include_tasks: "configure-{{ ansible_os_family }}.yml"
 
+# Tasks to create users in Teleport.
+- include_tasks: "user-creation.yml"
+
 - name: Ensure Teleport has selected state and enabled on boot.
   service:
     name: "{{ teleport_service }}"

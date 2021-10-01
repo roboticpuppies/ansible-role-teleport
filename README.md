@@ -5,6 +5,7 @@ Ansible role to install [Teleport Access Plane](https://goteleport.com/docs/gett
 
 Requirements
 ------------
+For proxy node, please provide your own SSL certificate and key file. Place it under `/var/lib/teleport/webproxy_cert.pem` and `/var/lib/teleport/webproxy_key.pem`. Please make sure `openssl` package is installed. Otherwise self-signed certificate will be used.
 
 Role Variables
 --------------
