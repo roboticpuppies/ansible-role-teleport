@@ -28,28 +28,18 @@ galaxy_info:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
   platforms:
-  - name: Centos
-    versions:
-    - 7
-    - 8
   - name: EL
     versions:
     - 7
     - 8
   - name: Ubuntu
     versions:
-    - 20.04
-    - 18.04
+    - bionic
+    - focal
   - name: Debian
     versions:
-    - 9
-    - 10
-  # - name: SomePlatform
-  #   versions:
-  #   - all
-  #   - 1.0
-  #   - 7
-  #   - 99.99
+    - stretch
+    - buster
 
   galaxy_tags: []
     # List tags for your role here, one per line. A tag is a keyword that describes
