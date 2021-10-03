@@ -34,8 +34,6 @@ teleport_u2f_facets:
   - https://localhost:3080
   - https://localhost
 
-
-teleport_locking_mode: "best_effort"
 teleport_auth_listen_address: "0.0.0.0:3025"
 teleport_auth_tokens_node: []
 teleport_auth_tokens_proxy: []
@@ -53,5 +51,3 @@ teleport_proxy_enabled: false
 teleport_proxy_listen_address: "0.0.0.0:3023"
 teleport_proxy_web_listen_address: "0.0.0.0:3080"
 teleport_proxy_tunnel_listen_address: "0.0.0.0:3024"
-teleport_proxy_https_cert_file: "/var/lib/teleport/webproxy_cert.pem"
-teleport_proxy_https_key_file: "/var/lib/teleport/webproxy_key.pem"

@@ -66,12 +66,6 @@ List of allowed addresses of the Teleport proxy checked during authentication at
     - https://localhost:3080
     - https://localhost
 
-Locking mode determines how to apply lock views locally available to a Teleport component; can be strict or best_effort.
-See the "Locking mode" section for more details
-(https://goteleport.com/docs/access-controls/guides/locking/#locking-mode).
-
-    teleport_locking_mode: "best_effort"
-
 IP and the port to bind to. Other Teleport nodes will be connecting to this port (AKA "Auth API" or "Cluster API") to validate client certificates.
 
     teleport_auth_listen_address: "0.0.0.0:3025"
@@ -107,12 +101,6 @@ Turns 'proxy' role on. true or false
 The HTTPS listen address to serve the Web UI and also to authenticate the command line (CLI) users via password+HOTP. Also handles the PostgreSQL proxy if database access is enabled.
 
     teleport_proxy_web_listen_address: "0.0.0.0:3080"
-
-
-TLS certificate for the HTTPS connection. Configuring these properly is critical for Teleport security.
-
-    teleport_proxy_https_cert_file: "/var/lib/teleport/webproxy_cert.pem"
-    teleport_proxy_https_key_file: "/var/lib/teleport/webproxy_key.pem"
 
 Dependencies
 ------------
