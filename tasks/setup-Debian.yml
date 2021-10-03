@@ -1,0 +1,18 @@
+---
+- name: Add Teleport apt key.
+  apt_key:
+    url: https://deb.releases.teleport.dev/teleport-pubkey.asc
+    state: present
+
+- name: Add Teleport repository.
+  apt_repository:
+    repo: deb https://deb.releases.teleport.dev/ stable main
+    state: present
+
+- name: Update apt cache.
+  apt: update_cache=yes
+
+- name: Ensure Teleport is installed in Debian.
+  apt:
+    name: "{{ teleport_packages }}"
+    state: "{{ teleport_packages_state }}"
