@@ -30,10 +30,12 @@ galaxy_info:
   platforms:
   - name: Centos
     versions:
-    - all
+    - 7
+    - 8
   - name: EL
     versions:
-    - all
+    - 7
+    - 8
   - name: Ubuntu
     versions:
     - 20.04
