@@ -4,20 +4,10 @@ dependency:
 driver:
   name: docker
 platforms:
-  # - name: debian10.myra.my.id
-  #   image: debian:10
-  #   # command: /sbin/init
-  #   tmpfs:
-  #     - /run
-  #     - /tmp
-  #   volumes:
-  #     - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  #   pre_build_image: true
-  #   groups:
-  #     - node
-  - name: debian9.myra.my.id
-    image: geerlingguy/docker-debian9-ansible
-    # command: /sbin/init
+  - name: debian10
+    image: geerlingguy/docker-debian10-ansible
+    command: /sbin/init
+    privileged: True
     tmpfs:
       - /run
       - /tmp
@@ -25,10 +15,38 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     pre_build_image: true
     groups:
-      - node
-  - name: auth.myra.my.id
-    image: centos:7
+      - auth
+      - proxy
+  - name: debian9
+    image: geerlingguy/docker-debian9-ansible
     command: /sbin/init
+    privileged: True
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    pre_build_image: true
+    groups:
+      - auth
+      - proxy
+  - name: ubuntu2004
+    image: geerlingguy/docker-ubuntu2004-ansible
+    command: /sbin/init
+    privileged: True
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    pre_build_image: true
+    groups:
+      - auth
+      - proxy
+  - name: ubuntu1804
+    image: geerlingguy/docker-ubuntu1804-ansible
+    command: /sbin/init
+    privileged: True
     tmpfs:
       - /run
       - /tmp
@@ -53,6 +71,6 @@ provisioner:
         teleport_proxy_enabled: true
       node:
         teleport_auth_servers:
-          - "172.17.0.4:3025"
+          - "172.17.0.6:3025"
 verifier:
   name: ansible
