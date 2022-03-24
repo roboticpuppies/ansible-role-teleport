@@ -47,6 +47,7 @@ teleport_client_idle_timeout: "never"
 teleport_ssh_enabled: true
 teleport_ssh_listen_address: "0.0.0.0:3022"
 teleport_ssh_labels: '{{ hostvars[inventory_hostname].group_names[0] }}'
+teleport_additional_labels: {}
 
 teleport_proxy_enabled: false
 teleport_proxy_listener_mode: "separate"

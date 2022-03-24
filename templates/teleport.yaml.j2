@@ -82,6 +82,11 @@ ssh_service:
   listen_addr: {{ teleport_ssh_listen_address }}
   labels:
     group: {{ teleport_ssh_labels }}
+  {% if teleport_ssh_additional_labels|length > 0 %}
+  {% for label,value in teleport_ssh_additional_labels.items() %}
+    {{ label }}: {{ value }}
+  {% endfor %}
+  {% endif %}
 {% else %}
   enabled: "no"
 {% endif %}
