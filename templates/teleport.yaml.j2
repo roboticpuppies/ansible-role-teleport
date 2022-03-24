@@ -47,7 +47,7 @@ auth_service:
       app_id: {{ teleport_u2f_app_id }}
       facets:
       {% for facet in teleport_u2f_facets %}
-      - {{ facet }}
+        - {{ facet }}
       {% endfor %}
 {% endif %}
   listen_addr: {{ teleport_auth_listen_address }}
@@ -94,7 +94,6 @@ ssh_service:
 proxy_service:
 {% if teleport_proxy_enabled == true %}
   enabled: "yes"
-  listen_addr: {{ teleport_proxy_listen_address }}
   web_listen_addr: {{ teleport_proxy_web_listen_address }}
   public_addr: {{ teleport_proxy_web_fqdn }}:443
   {% if teleport_configuration_version == "v1" or teleport_proxy_listener_mode == "separate" %}
