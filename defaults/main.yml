@@ -49,6 +49,7 @@ teleport_ssh_listen_address: "0.0.0.0:3022"
 teleport_ssh_labels: '{{ hostvars[inventory_hostname].group_names[0] }}'
 
 teleport_proxy_enabled: false
+teleport_proxy_listener_mode: "separate"
 teleport_proxy_listen_address: "0.0.0.0:3023"
 teleport_proxy_web_listen_address: "0.0.0.0:3080"
 teleport_proxy_tunnel_listen_address: "0.0.0.0:3024"

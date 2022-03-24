@@ -36,6 +36,9 @@ auth_service:
 {% if teleport_auth_enabled == true %}
   enabled: "yes"
   cluster_name: {{ teleport_auth_cluster_name }}
+  {% if teleport_configuration_version == "v2" %}
+  proxy_listener_mode: {{ teleport_proxy_listener_mode }}
+  {% endif %}
   authentication:
     type: local
     second_factor: {{ teleport_auth_second_factor }}
@@ -88,7 +91,10 @@ proxy_service:
   enabled: "yes"
   listen_addr: {{ teleport_proxy_listen_address }}
   web_listen_addr: {{ teleport_proxy_web_listen_address }}
+  {% if teleport_configuration_version == "v1" or teleport_proxy_listener_mode == "separate" %}
+  listen_addr: {{ teleport_proxy_listen_address }} 
   tunnel_listen_addr: {{ teleport_proxy_tunnel_listen_address }}
+  {% endif %}
 {% else %}
   enabled: "no"
 {% endif %}
