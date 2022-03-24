@@ -11,6 +11,7 @@ teleport_state: started
 teleport_enabled: "yes"
 
 teleport_configuration_path: "/etc/teleport.yaml"
+teleport_configuration_version: v1
 
 teleport_nodename: "{{ ansible_fqdn }}"
 teleport_data_dir: "/var/lib/teleport"
@@ -40,7 +41,7 @@ teleport_auth_tokens_proxy: []
 teleport_auth_tokens_auth: []
 
 teleport_session_recording: "node"
-teleport_proxy_checks_host_keys: yes
+teleport_proxy_checks_host_keys: "yes"
 teleport_client_idle_timeout: "never"
 
 teleport_ssh_enabled: true
