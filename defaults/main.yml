@@ -52,4 +52,5 @@ teleport_proxy_enabled: false
 teleport_proxy_listener_mode: "separate"
 teleport_proxy_listen_address: "0.0.0.0:3023"
 teleport_proxy_web_listen_address: "0.0.0.0:3080"
+teleport_proxy_web_fqdn: "{{ ansible_fqdn }}"
 teleport_proxy_tunnel_listen_address: "0.0.0.0:3024"

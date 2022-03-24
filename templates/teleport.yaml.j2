@@ -91,6 +91,7 @@ proxy_service:
   enabled: "yes"
   listen_addr: {{ teleport_proxy_listen_address }}
   web_listen_addr: {{ teleport_proxy_web_listen_address }}
+  public_addr: {{ teleport_proxy_web_fqdn }}:443
   {% if teleport_configuration_version == "v1" or teleport_proxy_listener_mode == "separate" %}
   listen_addr: {{ teleport_proxy_listen_address }} 
   tunnel_listen_addr: {{ teleport_proxy_tunnel_listen_address }}
